@@ -166,7 +166,7 @@ func findMissingStudents(
 	}
 	var missingStudents []string
 	for i := range *mapAcceleratorRoster.students {
-		mapAcceleratorStudent := (*mapGrowthRoster.students)[i]
+		mapAcceleratorStudent := (*mapAcceleratorRoster.students)[i]
 		if _, ok := mapGrowthStudentIDmap[*mapAcceleratorStudent.Id]; !ok {
 			missingStudents = append(missingStudents, *mapAcceleratorStudent.Id)
 		}
@@ -186,7 +186,7 @@ func findMissingTeachers(
 	}
 	var missing []string
 	for i := range *mapAcceleratorRoster.teachers {
-		mapAcceleratorTeacher := (*mapGrowthRoster.teachers)[i]
+		mapAcceleratorTeacher := (*mapAcceleratorRoster.teachers)[i]
 		if _, ok := mapGrowthTeacherIDmap[*mapAcceleratorTeacher.Id]; !ok {
 			missing = append(missing, *mapAcceleratorTeacher.Id)
 		}
@@ -205,8 +205,8 @@ func findMissingSchools(
 		mapGrowthSchoolIDmap[*mapGrowthSchool.Id] = true
 	}
 	var missing []string
-	for i := range *mapAcceleratorRoster.teachers {
-		mapAcceleratorSchool := (*mapGrowthRoster.schools)[i]
+	for i := range *mapAcceleratorRoster.schools {
+		mapAcceleratorSchool := (*mapAcceleratorRoster.schools)[i]
 		if _, ok := mapGrowthSchoolIDmap[*mapAcceleratorSchool.Id]; !ok {
 			missing = append(missing, *mapAcceleratorSchool.Id)
 		}

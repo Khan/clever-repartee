@@ -102,27 +102,22 @@ build: clean ## - Build the application
 .PHONY: run
 run: setup git-pull secrets build ## - Runs go run main.go
 	@printf "\033[32m\xE2\x9c\x93 Running your code\n\033[0m"
-	@PATH="${GOPATH}/bin:${PATH}" CLEVER_ID=$(CLEVER_ID) CLEVER_SECRET=$(CLEVER_SECRET) MAP_CLEVER_ID=$(MAP_CLEVER_ID) MAP_CLEVER_SECRET=$(MAP_CLEVER_SECRET) ${APP} sync -district=$$DISTRICT_ID -json -force
+	@PATH="${GOPATH}/bin:${PATH}" CLEVER_ID=$(CLEVER_ID) CLEVER_SECRET=$(CLEVER_SECRET) MAP_CLEVER_ID=$(MAP_CLEVER_ID) MAP_CLEVER_SECRET=$(MAP_CLEVER_SECRET) ${APP} diff -district=$$DISTRICT_ID -json -force
 
 .PHONY: justrun
 justrun: ## - Just Runs go run main.go
 	@printf "\033[32m\xE2\x9c\x93 Running your code\n\033[0m"
-	@PATH="${GOPATH}/bin:${PATH}" CLEVER_ID=$(CLEVER_ID) CLEVER_SECRET=$(CLEVER_SECRET) MAP_CLEVER_ID=$(MAP_CLEVER_ID) MAP_CLEVER_SECRET=$(MAP_CLEVER_SECRET) ${APP} sync -district=$$DISTRICT_ID -json -force
+	@PATH="${GOPATH}/bin:${PATH}" CLEVER_ID=$(CLEVER_ID) CLEVER_SECRET=$(CLEVER_SECRET) MAP_CLEVER_ID=$(MAP_CLEVER_ID) MAP_CLEVER_SECRET=$(MAP_CLEVER_SECRET) ${APP} diff -district=$$DISTRICT_ID -json -force
 
 .PHONY: test
 test: ## - Runs go test with default values
 	@printf "\033[32m\xE2\x9c\x93 Testing your code to find potential problems\n\033[0m"
 	GOPRIVATE=$(GOPRIVATE) go test -v -count=1 -race ./...
 
-.PHONY: roster-test-district
-roster-test-district: setup git-pull secrets build ## - Rosters test district as gcs protobuf file and json file
+.PHONY: diff-test-district
+diff-test-district: setup git-pull secrets build ## - Rosters test district as gcs protobuf file and json file
 	@printf "\033[32m\xE2\x9c\x93 Rostering test district\n\033[0m"
-	@PATH="${GOPATH}/bin:${PATH}" CLEVER_ID=$(CLEVER_ID) CLEVER_SECRET=$(CLEVER_SECRET) MAP_CLEVER_ID=$(MAP_CLEVER_ID) MAP_CLEVER_SECRET=$(MAP_CLEVER_SECRET) ${APP} sync -district=$$DISTRICT_ID -json -force
-
-.PHONY: roster-all-districts
-roster-all-districts: setup git-pull secrets build ## - Rosters all test districts as gcs protobuf files
-	@printf "\033[32m\xE2\x9c\x93 Rostering all prod districts\n\033[0m"
-	@PATH="${GOPATH}/bin:${PATH}" CLEVER_ID=$(CLEVER_ID) CLEVER_SECRET=$(CLEVER_SECRET) MAP_CLEVER_ID=$(MAP_CLEVER_ID) MAP_CLEVER_SECRET=$(MAP_CLEVER_SECRET) ${APP} sync -district=all
+	@PATH="${GOPATH}/bin:${PATH}" CLEVER_ID=$(CLEVER_ID) CLEVER_SECRET=$(CLEVER_SECRET) MAP_CLEVER_ID=$(MAP_CLEVER_ID) MAP_CLEVER_SECRET=$(MAP_CLEVER_SECRET) ${APP} diff -district=$$DISTRICT_ID -json -force
 
 .PHONY: cover
 cover: test ## - Runs test coverage report
